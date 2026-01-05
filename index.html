@@ -162,7 +162,6 @@
             <div class="chip-title">Тіло</div>
             <div class="row"><span>60 хв</span><strong>132 €</strong></div>
             <div class="row"><span>30 хв</span><strong>72 €</strong></div>
-            <div class="row"><span>15 хв</span><strong>32 €</strong></div>
         </div>
     </div>
     <div class="muted" style="margin-top:8px;font-size:12px;">
@@ -185,15 +184,25 @@
            placeholder="Хвилини" id="body" oninput="calculate()">
 </div>
 
+<div class="card">
+    <label>Зонт</label>
+    <div class="note">Фіксована вартість (з ПДВ)</div>
+    <div class="price">10,00 €</div>
+</div>
+
 <!-- ПІДСУМКИ -->
 <div class="total">
     <div class="total-line">
         <span>Послуги</span>
         <span id="servicesSum">0,00 €</span>
     </div>
+    <div class="total-line">
+        <span>Зонт</span>
+        <span>10,00 €</span>
+    </div>
     <div class="divider"></div>
     <div class="grand">
-        Разом: <span id="grandTotal">0 €</span>
+        Разом: <span id="grandTotal">10,00 €</span>
     </div>
 
     <div class="actions">
@@ -205,12 +214,13 @@
 function calculate() {
     const priceFace = 2.60;
     const priceBody = 2.20;
+    const umbrella = 10.00;
 
     const faceMin = Number(document.getElementById("face").value) || 0;
     const bodyMin = Number(document.getElementById("body").value) || 0;
 
     const servicesSum = faceMin * priceFace + bodyMin * priceBody;
-    const total = servicesSum;
+    const total = servicesSum + umbrella;
 
     document.getElementById("servicesSum").textContent =
         servicesSum.toFixed(2).replace(".", ",") + " €";
