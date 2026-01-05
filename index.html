@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<title>Калькулятор послуг</title>
+
+<style>
+    :root{
+        --bg:#f2f2f7;
+        --card:#ffffff;
+        --text:#000;
+        --muted:#6b6b6b;
+        --accent:#0a84ff;
+        --shadow:0 8px 20px rgba(0,0,0,.08);
+        --radius:16px;
+    }
+    body{
+        margin:0;
+        padding:16px;
+        background:var(--bg);
+        color:var(--text);
+        font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
+    }
+    h1{
+        text-align:center;
+        font-size:22px;
+        margin:6px 0 14px;
+        letter-spacing:.2px;
+    }
+
+    /* Cheat sheet */
+    .cheat{
+        background:linear-gradient(180deg,#ffffff,#f7f7fb);
+        border-radius:var(--radius);
+        padding:14px;
+        box-shadow:var(--shadow);
+        margin-bottom:14px;
+    }
+    .cheat h2{
+        font-size:16px;
+        margin:0 0 8px;
+        color:var(--accent);
+    }
+    .cheat-grid{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+    .chip{
+        background:var(--card);
+        border-radius:14px;
+        padding:10px 12px;
+        box-shadow:0 2px 8px rgba(0,0,0,.06);
+    }
+    .chip-title{
+        font-weight:700;
+        margin-bottom:6px;
+    }
+    .row{
+        display:flex;
+        justify-content:space-between;
+        font-size:14px;
+        margin:2px 0;
+    }
+    .muted{ color:var(--muted); }
+
+    /* Cards */
+    .card{
+        background:var(--card);
+        border-radius:var(--radius);
+        padding:14px;
+        box-shadow:var(--shadow);
+        margin-bottom:12px;
+    }
+    label{
+        font-size:16px;
+        font-weight:600;
+        display:block;
+        margin-bottom:6px;
+    }
+    .note{
+        font-size:13px;
+        color:var(--muted);
+        margin-bottom:6px;
+    }
+    input{
+        width:100%;
+        font-size:20px;
+        padding:12px;
+        border-radius:12px;
+        border:1px solid #d0d0d6;
+        box-sizing:border-box;
+    }
+    .price{
+        text-align:right;
+        font-size:18px;
+        font-weight:700;
+    }
+
+    /* Total */
+    .total{
+        background:var(--card);
+        border-radius:20px;
+        padding:16px;
+        box-shadow:var(--shadow);
+        margin-top:14px;
+    }
+    .total-line{
+        display:flex;
+        justify-content:space-between;
+        font-size:17px;
+        margin:6px 0;
+    }
+    .divider{
+        height:1px;
+        background:#e6e6eb;
+        margin:10px 0;
+    }
+    .grand{
+        text-align:center;
+        font-size:26px;
+        font-weight:800;
+        letter-spacing:.3px;
+    }
+
+    /* Actions */
+    .actions{
+        margin-top:12px;
+    }
+    button{
+        width:100%;
+        font-size:18px;
+        padding:14px;
+        border-radius:14px;
+        border:none;
+        background:#e5e5ea;
+        color:#000;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Калькулятор послуг</h1>
+
+<!-- ШПАРГАЛКА -->
+<div class="cheat">
+    <h2>Шпаргалка (з ПДВ, + зонт)</h2>
+    <div class="cheat-grid">
+        <div class="chip">
+            <div class="chip-title">Обличчя</div>
+            <div class="row"><span>60 хв</span><strong>156 €</strong></div>
+            <div class="row"><span>30 хв</span><strong>84 €</strong></div>
+            <div class="row"><span>15 хв</span><strong>48 €</strong></div>
+        </div>
+        <div class="chip">
+            <div class="chip-title">Тіло</div>
+            <div class="row"><span>60 хв</span><strong>132 €</strong></div>
+            <div class="row"><span>30 хв</span><strong>72 €</strong></div>
+            <div class="row"><span>15 хв</span><strong>32 €</strong></div>
+        </div>
+    </div>
+    <div class="muted" style="margin-top:8px;font-size:12px;">
+        * У прикладах враховано фіксовані 10,00 € за «Зонт».
+    </div>
+</div>
+
+<!-- ВВІД -->
+<div class="card">
+    <label>Обличчя — 2,60 € / хв</label>
+    <div class="note">Ціна з ПДВ</div>
+    <input type="number" inputmode="numeric" min="0" step="1"
+           placeholder="Хвилини" id="face" oninput="calculate()">
+</div>
+
+<div class="card">
+    <label>Тіло — 2,20 € / хв</label>
+    <div class="note">Ціна з ПДВ</div>
+    <input type="number" inputmode="numeric" min="0" step="1"
+           placeholder="Хвилини" id="body" oninput="calculate()">
+</div>
+
+<!-- ПІДСУМКИ -->
+<div class="total">
+    <div class="total-line">
+        <span>Послуги</span>
+        <span id="servicesSum">0,00 €</span>
+    </div>
+    <div class="divider"></div>
+    <div class="grand">
+        Разом: <span id="grandTotal">0 €</span>
+    </div>
+
+    <div class="actions">
+        <button onclick="clearAll()">Очистити</button>
+    </div>
+</div>
+
+<script>
+function calculate() {
+    const priceFace = 2.60;
+    const priceBody = 2.20;
+
+    const faceMin = Number(document.getElementById("face").value) || 0;
+    const bodyMin = Number(document.getElementById("body").value) || 0;
+
+    const servicesSum = faceMin * priceFace + bodyMin * priceBody;
+    const total = servicesSum;
+
+    document.getElementById("servicesSum").textContent =
+        servicesSum.toFixed(2).replace(".", ",") + " €";
+    document.getElementById("grandTotal").textContent =
+        total.toFixed(2).replace(".", ",") + " €";
+}
+
+function clearAll() {
+    document.getElementById("face").value = "";
+    document.getElementById("body").value = "";
+    document.getElementById("servicesSum").textContent = "0,00 €";
+    document.getElementById("grandTotal").textContent = "10,00 €";
+}
+</script>
+
+</body>
+</html>
