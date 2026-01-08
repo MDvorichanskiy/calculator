@@ -187,14 +187,14 @@
 
 <!-- ВВІД -->
 <div class="card">
-    <label>Обличчя — 2,60 € / хв</label>
+    <label>Обличчя — 2.4333333 € / хв</label>
     <div class="note">Ціна з ПДВ</div>
     <input type="number" inputmode="numeric" min="0" step="1"
            placeholder="Хвилини" id="face" oninput="calculate()">
 </div>
 
 <div class="card">
-    <label>Тіло — 2,20 € / хв</label>
+    <label>Тіло — 2.0333333 € / хв</label>
     <div class="note">Ціна з ПДВ</div>
     <input type="number" inputmode="numeric" min="0" step="1"
            placeholder="Хвилини" id="body" oninput="calculate()">
@@ -251,8 +251,8 @@
 
 <script>
 function calculate() {
-    const priceFace = 2.60;
-    const priceBody = 2.20;
+    const priceFace = 2.4333333;
+    const priceBody = 2.0333333;
     const umbrella = 10.00;
 
     const faceMin = Number(document.getElementById("face").value) || 0;
