@@ -141,6 +141,22 @@
         background:#e5e5ea;
         color:#000;
     }
+
+    .alt-block{
+    background:linear-gradient(180deg,#ffffff,#f9f9fc);
+    border:1px dashed #d8d8e0;
+    border-radius:20px;
+    padding:14px;
+    margin-top:22px;
+    }
+    .alt-title{
+    text-align:center;
+    font-size:18px;
+    font-weight:700;
+    color:#333;
+    margin-bottom:10px;
+    }
+
 </style>
 </head>
 
@@ -184,12 +200,12 @@
            placeholder="Хвилини" id="body" oninput="calculate()">
 </div>
 
-<div class="card">
+<!-- <div class="card">
     <label>Зонт</label>
     <div class="note">Фіксована вартість (з ПДВ)</div>
     <div class="price">0 €</div>
 </div>
-
+ -->
 <!-- ПІДСУМКИ -->
 <div class="total">
     <div class="total-line">
@@ -209,6 +225,29 @@
         <button onclick="clearAll()">Очистити</button>
     </div>
 </div>
+
+<!-- КАЛЬКУЛЯТОР: ЛЕРА -->
+<div class="alt-block">
+    <div class="alt-title">Окремий калькулятор — Лера</div>
+
+    <div class="card" style="box-shadow:none;">
+        <label>Лера — 65 € / год</label>
+        <div class="note">≈ 1,0833 € / хв (з ПДВ)</div>
+        <input type="number" inputmode="numeric" min="0" step="1"
+               placeholder="Хвилини" id="lera" oninput="calculateLera()">
+    </div>
+
+    <div class="total" style="box-shadow:none;">
+        <div class="grand">
+            Лера разом: <span id="leraTotal">0,00 €</span>
+        </div>
+
+        <div class="actions">
+            <button onclick="clearLera()">Очистити</button>
+        </div>
+    </div>
+</div>
+
 
 <script>
 function calculate() {
@@ -234,6 +273,23 @@ function clearAll() {
     document.getElementById("servicesSum").textContent = "0,00 €";
     document.getElementById("grandTotal").textContent = "10,00 €";
 }
+
+function calculateLera() {
+    const pricePerHour = 65.00;
+    const pricePerMinute = pricePerHour / 60;
+
+    const minutes = Number(document.getElementById("lera").value) || 0;
+    const total = minutes * pricePerMinute;
+
+    document.getElementById("leraTotal").textContent =
+        total.toFixed(2).replace(".", ",") + " €";
+}
+
+function clearLera() {
+    document.getElementById("lera").value = "";
+    document.getElementById("leraTotal").textContent = "0,00 €";
+}
+
 </script>
 
 </body>
