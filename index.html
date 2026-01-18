@@ -1,296 +1,428 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-<title>Калькулятор послуг</title>
+    <title>Калькулятор послуг</title>
 
-<style>
-    :root{
-        --bg:#f2f2f7;
-        --card:#ffffff;
-        --text:#000;
-        --muted:#6b6b6b;
-        --accent:#0a84ff;
-        --shadow:0 8px 20px rgba(0,0,0,.08);
-        --radius:16px;
-    }
-    body{
-        margin:0;
-        padding:16px;
-        background:var(--bg);
-        color:var(--text);
-        font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Arial,sans-serif;
-    }
-    h1{
-        text-align:center;
-        font-size:22px;
-        margin:6px 0 14px;
-        letter-spacing:.2px;
-    }
+    <style>
+        :root {
+            --bg: #f2f2f7;
+            --card: #ffffff;
+            --text: #000;
+            --muted: #6b6b6b;
+            --accent: #0a84ff;
+            --shadow: 0 8px 20px rgba(0, 0, 0, .08);
+            --radius: 16px;
+        }
 
-    /* Cheat sheet */
-    .cheat{
-        background:linear-gradient(180deg,#ffffff,#f7f7fb);
-        border-radius:var(--radius);
-        padding:14px;
-        box-shadow:var(--shadow);
-        margin-bottom:14px;
-    }
-    .cheat h2{
-        font-size:16px;
-        margin:0 0 8px;
-        color:var(--accent);
-    }
-    .cheat-grid{
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-    }
-    .chip{
-        background:var(--card);
-        border-radius:14px;
-        padding:10px 12px;
-        box-shadow:0 2px 8px rgba(0,0,0,.06);
-    }
-    .chip-title{
-        font-weight:700;
-        margin-bottom:6px;
-    }
-    .row{
-        display:flex;
-        justify-content:space-between;
-        font-size:14px;
-        margin:2px 0;
-    }
-    .muted{ color:var(--muted); }
+        body {
+            margin: 0;
+            padding: 16px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", Arial, sans-serif;
+        }
 
-    /* Cards */
-    .card{
-        background:var(--card);
-        border-radius:var(--radius);
-        padding:14px;
-        box-shadow:var(--shadow);
-        margin-bottom:12px;
-    }
-    label{
-        font-size:16px;
-        font-weight:600;
-        display:block;
-        margin-bottom:6px;
-    }
-    .note{
-        font-size:13px;
-        color:var(--muted);
-        margin-bottom:6px;
-    }
-    input{
-        width:100%;
-        font-size:20px;
-        padding:12px;
-        border-radius:12px;
-        border:1px solid #d0d0d6;
-        box-sizing:border-box;
-    }
-    .price{
-        text-align:right;
-        font-size:18px;
-        font-weight:700;
-    }
+        h1 {
+            text-align: center;
+            font-size: 22px;
+            margin: 6px 0 14px;
+            letter-spacing: .2px;
+        }
 
-    /* Total */
-    .total{
-        background:var(--card);
-        border-radius:20px;
-        padding:16px;
-        box-shadow:var(--shadow);
-        margin-top:14px;
-    }
-    .total-line{
-        display:flex;
-        justify-content:space-between;
-        font-size:17px;
-        margin:6px 0;
-    }
-    .divider{
-        height:1px;
-        background:#e6e6eb;
-        margin:10px 0;
-    }
-    .grand{
-        text-align:center;
-        font-size:26px;
-        font-weight:800;
-        letter-spacing:.3px;
-    }
+        /* Cheat sheet */
+        .cheat {
+            background: linear-gradient(180deg, #ffffff, #f7f7fb);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 14px;
+        }
 
-    /* Actions */
-    .actions{
-        margin-top:12px;
-    }
-    button{
-        width:100%;
-        font-size:18px;
-        padding:14px;
-        border-radius:14px;
-        border:none;
-        background:#e5e5ea;
-        color:#000;
-    }
+        .cheat h2 {
+            font-size: 16px;
+            margin: 0 0 8px;
+            color: var(--accent);
+        }
 
-    .alt-block{
-    background:linear-gradient(180deg,#ffffff,#f9f9fc);
-    border:1px dashed #d8d8e0;
-    border-radius:20px;
-    padding:14px;
-    margin-top:22px;
-    }
-    .alt-title{
-    text-align:center;
-    font-size:18px;
-    font-weight:700;
-    color:#333;
-    margin-bottom:10px;
-    }
+        .cheat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
 
-</style>
+        .chip {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 10px 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+        }
+
+        .chip-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin: 2px 0;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .note {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            font-size: 20px;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #d0d0d6;
+            box-sizing: border-box;
+        }
+
+        .price {
+            text-align: right;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Total */
+        .total {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+            margin-top: 14px;
+        }
+
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 17px;
+            margin: 6px 0;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e6e6eb;
+            margin: 10px 0;
+        }
+
+        .grand {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: .3px;
+        }
+
+        /* Actions */
+        .actions {
+            margin-top: 12px;
+        }
+
+        button {
+            width: 100%;
+            font-size: 18px;
+            padding: 14px;
+            border-radius: 14px;
+            border: none;
+            background: #e5e5ea;
+            color: #000;
+        }
+
+        .alt-block {
+            background: linear-gradient(180deg, #ffffff, #f9f9fc);
+            border: 1px dashed #d8d8e0;
+            border-radius: 20px;
+            padding: 14px;
+            margin-top: 22px;
+        }
+
+        .alt-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* Сума словами – акцент */
+        .words-box {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #f5f7ff, #ffffff);
+            border: 1px solid rgba(10, 132, 255, .25);
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 1.35;
+            color: #1c1c1e;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Калькулятор послуг</h1>
+    <h1>Калькулятор послуг</h1>
 
-<!-- ШПАРГАЛКА -->
-<div class="cheat">
-    <h2>Пакети послуг з сайту (з ПДВ, + зонт)</h2>
-    <div class="cheat-grid">
-        <div class="chip">
-            <div class="chip-title">Обличчя</div>
-            <div class="row"><span>60 хв</span><strong>156 €</strong></div>
-            <div class="row"><span>30 хв</span><strong>84 €</strong></div>
-            <div class="row"><span>15 хв</span><strong>48 €</strong></div>
+    <!-- ШПАРГАЛКА -->
+    <div class="cheat">
+        <h2>Шпаргалка (з ПДВ, + зонт)</h2>
+        <div class="cheat-grid">
+            <div class="chip">
+                <div class="chip-title">Обличчя</div>
+                <div class="row"><span>60 хв</span><strong>156 €</strong></div>
+                <div class="row"><span>30 хв</span><strong>84 €</strong></div>
+                <div class="row"><span>15 хв</span><strong>48 €</strong></div>
+            </div>
+            <div class="chip">
+                <div class="chip-title">Тіло</div>
+                <div class="row"><span>60 хв</span><strong>132 €</strong></div>
+                <div class="row"><span>30 хв</span><strong>72 €</strong></div>
+            </div>
         </div>
-        <div class="chip">
-            <div class="chip-title">Тіло</div>
-            <div class="row"><span>60 хв</span><strong>132 €</strong></div>
-            <div class="row"><span>30 хв</span><strong>72 €</strong></div>
+        <div class="muted" style="margin-top:8px;font-size:12px;">
+            * У прикладах враховано фіксовані 10,00 € за «Зонт».
         </div>
     </div>
-    <div class="muted" style="margin-top:8px;font-size:12px;">
-        * У прикладах враховано фіксовані 10,00 € за «Зонт».
+
+    <!-- ВВІД -->
+    <div class="card">
+        <label>Обличчя — 2.4333333 € / хв</label>
+        <div class="note">Ціна з ПДВ</div>
+        <input type="number" inputmode="numeric" min="0" step="1" placeholder="Хвилини" id="face" oninput="calculate()">
     </div>
-</div>
 
-<!-- ВВІД -->
-<div class="card">
-    <label>Обличчя — 2.4333333 € / хв</label>
-    <div class="note">Ціна з ПДВ</div>
-    <input type="number" inputmode="numeric" min="0" step="1"
-           placeholder="Хвилини" id="face" oninput="calculate()">
-</div>
+    <div class="card">
+        <label>Тіло — 2.0333333 € / хв</label>
+        <div class="note">Ціна з ПДВ</div>
+        <input type="number" inputmode="numeric" min="0" step="1" placeholder="Хвилини" id="body" oninput="calculate()">
+    </div>
 
-<div class="card">
-    <label>Тіло — 2.0333333 € / хв</label>
-    <div class="note">Ціна з ПДВ</div>
-    <input type="number" inputmode="numeric" min="0" step="1"
-           placeholder="Хвилини" id="body" oninput="calculate()">
-</div>
-
-<!-- <div class="card">
+    <!-- <div class="card">
     <label>Зонт</label>
     <div class="note">Фіксована вартість (з ПДВ)</div>
     <div class="price">0 €</div>
 </div>
  -->
-<!-- ПІДСУМКИ -->
-<div class="total">
-    <div class="total-line">
-        <span>Послуги</span>
-        <span id="servicesSum">0,00 €</span>
-    </div>
-    <div class="total-line">
-        <span>Зонт</span>
-        <span>10,00 €</span>
-    </div>
-    <div class="divider"></div>
-    <div class="grand">
-        Разом: <span id="grandTotal">0,00 €</span>
-    </div>
-
-    <div class="actions">
-        <button onclick="clearAll()">Очистити</button>
-    </div>
-</div>
-
-<!-- КАЛЬКУЛЯТОР: ЛЕРА -->
-<div class="alt-block">
-    <div class="alt-title">Окремий калькулятор — Лера</div>
-
-    <div class="card" style="box-shadow:none;">
-        <label>Лера — 65 € / год</label>
-        <div class="note">≈ 1,0833 € / хв (з ПДВ)</div>
-        <input type="number" inputmode="numeric" min="0" step="1"
-               placeholder="Хвилини" id="lera" oninput="calculateLera()">
-    </div>
-
-    <div class="total" style="box-shadow:none;">
+    <!-- ПІДСУМКИ -->
+    <div class="total">
+        <div class="total-line">
+            <span>Послуги</span>
+            <span id="servicesSum">0,00 €</span>
+        </div>
+        <div class="total-line">
+            <span>Зонт</span>
+            <span>10,00 €</span>
+        </div>
+        <div class="divider"></div>
         <div class="grand">
-            Лера разом: <span id="leraTotal">0,00 €</span>
+            Разом: <span id="grandTotal">0,00 €</span>
         </div>
 
         <div class="actions">
-            <button onclick="clearLera()">Очистити</button>
+            <button onclick="clearAll()">Очистити</button>
         </div>
     </div>
-</div>
+
+    <!-- КАЛЬКУЛЯТОР: ЛЕРА -->
+    <div class="alt-block">
+        <div class="alt-title">Окремий калькулятор — Лера</div>
+
+        <div class="card" style="box-shadow:none;">
+            <label>Лера — 65 € / год</label>
+            <div class="note">≈ 1,0833 € / хв (з ПДВ)</div>
+            <input type="number" inputmode="numeric" min="0" step="1" placeholder="Хвилини" id="lera"
+                oninput="calculateLera()">
+        </div>
+
+        <div class="total" style="box-shadow:none;">
+            <div class="grand">
+                Лера разом: <span id="leraTotal">0,00 €</span>
+            </div>
+
+            <div class="actions">
+                <button onclick="clearLera()">Очистити</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- КАЛЬКУЛЯТОР ПДВ + СУМА СЛОВАМИ -->
+    <div class="alt-block">
+        <div class="alt-title">ПДВ-калькулятор (19 %)</div>
+
+        <div class="card" style="box-shadow:none;">
+            <label>Сума (брутто)</label>
+            <div class="note">Введіть загальну суму</div>
+            <input type="number" inputmode="decimal" min="0" step="0.01" placeholder="€" id="vatBrutto"
+                oninput="calculateVat()">
+        </div>
+
+        <div class="total" style="box-shadow:none;">
+            <div class="total-line">
+                <span>Нетто</span>
+                <span id="vatNetto">0,00 €</span>
+            </div>
+            <div class="total-line">
+                <span>ПДВ 19 %</span>
+                <span id="vatTax">0,00 €</span>
+            </div>
+            <div class="divider"></div>
+            <div class="grand">
+                Брутто: <span id="vatBruttoOut">0,00 €</span>
+            </div>
+            <div class="words-box" id="vatWords">
+                —
+            </div>
+
+            <div class="actions">
+                <button onclick="clearVat()">Очистити</button>
+            </div>
+        </div>
+    </div>
 
 
-<script>
-function calculate() {
-    const priceFace = 2.4333333;
-    const priceBody = 2.0333333;
-    const umbrella = 10.00;
 
-    const faceMin = Number(document.getElementById("face").value) || 0;
-    const bodyMin = Number(document.getElementById("body").value) || 0;
+    <script>
+        function calculate() {
+            const priceFace = 2.4333333;
+            const priceBody = 2.0333333;
+            const umbrella = 10.00;
 
-    const servicesSum = faceMin * priceFace + bodyMin * priceBody;
-    const total = servicesSum + umbrella;
+            const faceMin = Number(document.getElementById("face").value) || 0;
+            const bodyMin = Number(document.getElementById("body").value) || 0;
 
-    document.getElementById("servicesSum").textContent =
-        servicesSum.toFixed(2).replace(".", ",") + " €";
-    document.getElementById("grandTotal").textContent =
-        total.toFixed(2).replace(".", ",") + " €";
-}
+            const servicesSum = faceMin * priceFace + bodyMin * priceBody;
+            const total = servicesSum + umbrella;
 
-function clearAll() {
-    document.getElementById("face").value = "";
-    document.getElementById("body").value = "";
-    document.getElementById("servicesSum").textContent = "0,00 €";
-    document.getElementById("grandTotal").textContent = "10,00 €";
-}
+            document.getElementById("servicesSum").textContent =
+                servicesSum.toFixed(2).replace(".", ",") + " €";
+            document.getElementById("grandTotal").textContent =
+                total.toFixed(2).replace(".", ",") + " €";
+        }
 
-function calculateLera() {
-    const pricePerHour = 65.00;
-    const pricePerMinute = pricePerHour / 60;
+        function clearAll() {
+            document.getElementById("face").value = "";
+            document.getElementById("body").value = "";
+            document.getElementById("servicesSum").textContent = "0,00 €";
+            document.getElementById("grandTotal").textContent = "10,00 €";
+        }
 
-    const minutes = Number(document.getElementById("lera").value) || 0;
-    const total = minutes * pricePerMinute;
+        function calculateLera() {
+            const pricePerHour = 65.00;
+            const pricePerMinute = pricePerHour / 60;
 
-    document.getElementById("leraTotal").textContent =
-        total.toFixed(2).replace(".", ",") + " €";
-}
+            const minutes = Number(document.getElementById("lera").value) || 0;
+            const total = minutes * pricePerMinute;
 
-function clearLera() {
-    document.getElementById("lera").value = "";
-    document.getElementById("leraTotal").textContent = "0,00 €";
-}
+            document.getElementById("leraTotal").textContent =
+                total.toFixed(2).replace(".", ",") + " €";
+        }
 
-</script>
+        function clearLera() {
+            document.getElementById("lera").value = "";
+            document.getElementById("leraTotal").textContent = "0,00 €";
+        }
+
+        function calculateVat() {
+            const rate = 1.19;
+            const brutto = Number(document.getElementById("vatBrutto").value) || 0;
+
+            const netto = brutto / rate;
+            const tax = brutto - netto;
+
+            document.getElementById("vatNetto").textContent =
+                netto.toFixed(2).replace(".", ",") + " €";
+            document.getElementById("vatTax").textContent =
+                tax.toFixed(2).replace(".", ",") + " €";
+            document.getElementById("vatBruttoOut").textContent =
+                brutto.toFixed(2).replace(".", ",") + " €";
+
+            document.getElementById("vatWords").textContent =
+                numberToGermanWords(brutto);
+        }
+
+        function clearVat() {
+            document.getElementById("vatBrutto").value = "";
+            document.getElementById("vatNetto").textContent = "0,00 €";
+            document.getElementById("vatTax").textContent = "0,00 €";
+            document.getElementById("vatBruttoOut").textContent = "0,00 €";
+            document.getElementById("vatWords").textContent = "—";
+        }
+
+        function numberToGermanWords(amount) {
+            if (!amount || amount <= 0) return "null Euro";
+
+            const units = ["", "eins", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun"];
+            const teens = ["zehn", "elf", "zwölf", "dreizehn", "vierzehn", "fünfzehn", "sechzehn", "siebzehn", "achtzehn", "neunzehn"];
+            const tens = ["", "", "zwanzig", "dreißig", "vierzig", "fünfzig", "sechzig", "siebzig", "achtzig", "neunzig"];
+
+            function belowHundred(n) {
+                if (n < 10) return units[n];
+                if (n < 20) return teens[n - 10];
+                const u = n % 10;
+                const t = Math.floor(n / 10);
+                return u ? units[u] + "und" + tens[t] : tens[t];
+            }
+
+            function belowThousand(n) {
+                if (n < 100) return belowHundred(n);
+                const h = Math.floor(n / 100);
+                const r = n % 100;
+                return (h === 1 ? "einhundert" : units[h] + "hundert") + (r ? belowHundred(r) : "");
+            }
+
+            let euros = Math.floor(amount);
+            let cents = Math.round((amount - euros) * 100);
+
+            let euroWords = "";
+            if (euros === 1) euroWords = "ein Euro";
+            else if (euros < 1000) euroWords = belowThousand(euros) + " Euro";
+            else euroWords = euros.toString() + " Euro"; // для великих сум без ризику помилок
+
+            let centWords = "";
+            if (cents > 0) {
+                if (cents === 1) centWords = "ein Cent";
+                else centWords = belowHundred(cents) + " Cent";
+            }
+
+            return centWords ? euroWords + " und " + centWords : euroWords;
+        }
+
+
+    </script>
 
 </body>
+
 </html>
